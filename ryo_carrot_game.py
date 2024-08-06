@@ -3,11 +3,13 @@ import pygame
 
 from ryo import Ryo
 from screen import Screen
+from settings import Settings
 
 
 class RyoCarrotGame:
     def __init__(self):
         pygame.init()
+        self.settings = Settings()
 
         self.screen = Screen()
         self.landscape = None
@@ -24,7 +26,7 @@ class RyoCarrotGame:
 
             self.choose_events()
 
-            self.ryo.update_position_ryo()
+            self.ryo.update_position_ryo(self.is_fullscreen)
 
             self.update_landscape()
 
