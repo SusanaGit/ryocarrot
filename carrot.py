@@ -12,5 +12,8 @@ class Carrot(Sprite):
         self.settings = ryo_carrot_game_object.settings
         self.color_carrot = self.settings.carrot_color
 
-
+    def create_carrot(self, ryo_carrot_game_object):
+        self.rect_carrot = pygame.Rect(0, 0, self.settings.carrot_width,
+                                       self.settings.carrot_height)
+        self.rect_carrot.midtop = ryo_carrot_game_object.ryo.rect_image_ryo.midtop
 
