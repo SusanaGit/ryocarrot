@@ -13,7 +13,6 @@ class Screen:
         self.screen_width = 800
         self.screen_height = 800
         self.app_title = "Ryo Carrot Game"
-        pygame.display.set_mode((self.screen_width, self.screen_height))
         self.load_background_image()
 
     def initialize_screen_fullscreen(self):

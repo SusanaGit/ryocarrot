@@ -18,8 +18,15 @@ class Ryo:
 
     def load_image_ryo(self):
         self.image_ryo = pygame.image.load('images/ryo.png')
+        self.image_ryo = pygame.transform.scale(self.image_ryo, (100, 50))
         self.rect_image_ryo = self.image_ryo.get_rect()
         self.rect_image_ryo.midbottom = self.landscape_rect.midbottom
 
     def draw_ryo_current_location(self):
         self.landscape.blit(self.image_ryo, self.rect_image_ryo)
+
+    def update_landscape(self, new_landscape):
+        self.landscape = new_landscape
+        self.landscape_rect = self.landscape.get_rect()
+
+        self.rect_image_ryo.midbottom = self.landscape_rect.midbottom
