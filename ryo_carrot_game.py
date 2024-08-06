@@ -33,6 +33,10 @@ class RyoCarrotGame:
                 self.change_size_screen()
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_q:
                 sys.exit()
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
+                self.ryo.rect_image_ryo.x += 1
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
+                self.ryo.rect_image_ryo.x -= 1
 
     def update_landscape(self):
         self.landscape.blit(self.screen.background_image, (0, 0))
