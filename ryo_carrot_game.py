@@ -36,8 +36,12 @@ class RyoCarrotGame:
                 self.change_size_screen()
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_q:
                 sys.exit()
+
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
                 self.ryo.moving_right_ryo = True
+            elif event.type == pygame.KEYUP:
+                self.ryo.moving_right_ryo = False
+
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
                 self.ryo.rect_image_ryo.x -= 1
 
