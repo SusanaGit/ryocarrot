@@ -1,3 +1,4 @@
+import sys
 import pygame
 
 from ryo import Ryo
@@ -20,19 +21,23 @@ class RyoCarrotGame:
         running = True
 
         while running:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    running = False
-                elif event.type == pygame.KEYDOWN and event.key == pygame.K_F11:
-                    self.change_size_screen()
 
-            self.landscape.blit(self.screen.background_image, (0, 0))
+            self.choose_events()
+            self.update_landscape()
 
-            self.ryo.draw_ryo_current_location()
+    def choose_events(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_F11:
+                self.change_size_screen()
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_q:
+                sys.exit()
 
-            pygame.display.flip()
-
-        pygame.quit()
+    def update_landscape(self):
+        self.landscape.blit(self.screen.background_image, (0, 0))
+        self.ryo.draw_ryo_current_location()
+        pygame.display.flip()
 
     def initialize_screen(self):
         self.screen.initialize_screen()
