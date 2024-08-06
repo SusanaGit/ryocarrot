@@ -23,6 +23,9 @@ class RyoCarrotGame:
         while running:
 
             self.choose_events()
+
+            self.ryo.update_position_ryo()
+
             self.update_landscape()
 
     def choose_events(self):
@@ -34,7 +37,7 @@ class RyoCarrotGame:
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_q:
                 sys.exit()
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_RIGHT:
-                self.ryo.rect_image_ryo.x += 1
+                self.ryo.moving_right_ryo = True
             elif event.type == pygame.KEYDOWN and event.key == pygame.K_LEFT:
                 self.ryo.rect_image_ryo.x -= 1
 
