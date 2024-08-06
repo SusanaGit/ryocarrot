@@ -44,12 +44,12 @@ class Ryo:
         self.rect_image_ryo.midbottom = self.landscape_rect.midbottom
 
     def update_position_ryo(self, is_fullscreen):
-        if self.moving_right_ryo:
+        if self.moving_right_ryo and self.rect_image_ryo.right < self.landscape_rect.right:
             if is_fullscreen:
                 self.x += self.settings.ryo_speed_fullscreen
             else:
                 self.x += self.settings.ryo_speed_small
-        elif self.moving_left_ryo:
+        elif self.moving_left_ryo and self.rect_image_ryo.left > 0:
             if is_fullscreen:
                 self.x -= self.settings.ryo_speed_fullscreen
             else:
