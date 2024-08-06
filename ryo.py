@@ -13,6 +13,7 @@ class Ryo:
         self.load_image_ryo()
 
         self.moving_right_ryo = False
+        self.moving_left_ryo = False
 
     def obtain_landscape_from_ryo_carrot_game(self, ryo_carrot_game_object):
         self.landscape = ryo_carrot_game_object.landscape
@@ -36,3 +37,5 @@ class Ryo:
     def update_position_ryo(self):
         if self.moving_right_ryo:
             self.rect_image_ryo.x += 1
+        elif self.moving_left_ryo:
+            self.rect_image_ryo.x -= 1
