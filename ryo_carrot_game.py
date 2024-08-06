@@ -23,16 +23,31 @@ class RyoCarrotGame:
         while running:
 
             self.choose_events()
+
+            self.ryo.update_position_ryo()
+
             self.update_landscape()
 
     def choose_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_F11:
-                self.change_size_screen()
-            elif event.type == pygame.KEYDOWN and event.key == pygame.K_q:
-                sys.exit()
+
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_F11:
+                    self.change_size_screen()
+                elif event.key == pygame.K_q:
+                    sys.exit()
+                elif event.key == pygame.K_RIGHT:
+                    self.ryo.moving_right_ryo = True
+                elif event.key == pygame.K_LEFT:
+                    self.ryo.moving_left_ryo = True
+
+            elif event.type == pygame.KEYUP:
+                if event.key == pygame.K_RIGHT:
+                    self.ryo.moving_right_ryo = False
+                if event.key == pygame.K_LEFT:
+                    self.ryo.moving_left_ryo = False
 
     def update_landscape(self):
         self.landscape.blit(self.screen.background_image, (0, 0))
