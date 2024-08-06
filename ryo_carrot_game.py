@@ -1,5 +1,6 @@
 import pygame
 
+from ryo import Ryo
 from screen import Screen
 
 
@@ -10,10 +11,10 @@ class RyoCarrotGame:
         self.screen = Screen()
         self.landscape = None
         self.is_fullscreen = False
-
         self.initialize_screen()
-
         self.countChangeSizeLandscape = 0
+
+        self.ryo = Ryo(self)
 
     def run_ryo_carrot_game(self):
         running = True
@@ -24,8 +25,10 @@ class RyoCarrotGame:
                     running = False
                 elif event.type == pygame.KEYDOWN and event.key == pygame.K_F11:
                     self.change_size_screen()
-
             self.landscape.blit(self.screen.background_image, (0, 0))
+
+            self.ryo.draw_ryo_current_location()
+
             pygame.display.flip()
 
         pygame.quit()
