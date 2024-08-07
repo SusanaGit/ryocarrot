@@ -21,15 +21,15 @@ class Carrot(Sprite):
         self.image_carrot = pygame.image.load('images/carrot.png')
         self.image_carrot = pygame.transform.scale(self.image_carrot, (self.settings.carrot_width,
                                                                        self.settings.carrot_height))
-        self.rect_image_carrot = self.image_carrot.get_rect()
-        self.rect_image_carrot.midtop = ryo_carrot_game_object.ryo.rect_image_ryo.midtop
+        self.rect = self.image_carrot.get_rect()
+        self.rect.midtop = ryo_carrot_game_object.ryo.rect.midtop
 
     def decimal_value_position_carrot(self):
-        self.y = float(self.rect_image_carrot.y)
+        self.y = float(self.rect.y)
 
     def update(self):
         self.y -= self.settings.carrot_speed
-        self.rect_image_carrot.y = self.y
+        self.rect.y = self.y
 
     def draw_carrot(self):
-        self.landscape.blit(self.image_carrot, self.rect_image_carrot)
+        self.landscape.blit(self.image_carrot, self.rect)

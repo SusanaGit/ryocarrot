@@ -40,9 +40,3 @@ class BabyBunny(Sprite):
     def update(self):
         self.y += self.settings.babybunny_speed
         self.rect.y = self.y
-
-        self.delete_babybunny()
-
-    def delete_babybunny(self):
-        if self.rect.top > self.landscape.get_height():
-            self.kill()
