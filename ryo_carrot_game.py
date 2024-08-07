@@ -12,6 +12,7 @@ from babybunny import BabyBunny
 class RyoCarrotGame:
     def __init__(self):
         pygame.init()
+        pygame.mixer.init()
         self.settings = Settings()
 
         self.screen = Screen()
@@ -33,6 +34,8 @@ class RyoCarrotGame:
         self.font = pygame.font.SysFont(None, 48)
 
         self.create_images_counts()
+
+        self.music()
 
     def run_ryo_carrot_game(self):
         running = True
@@ -181,6 +184,12 @@ class RyoCarrotGame:
 
         self.unhappy_babybunnies_image = pygame.image.load("images/unhappy-baby-bunny.png")
         self.unhappy_babybunnies_image = pygame.transform.scale(self.unhappy_babybunnies_image, (100, 100))
+
+    def music(self):
+        pygame.mixer.music.load("music/dreams.mp3")
+        pygame.mixer.music.play(-1)
+        print("Royalty Free Music: https://www.bensound.com License code: SES9TCRFZ5LYRORV")
+
 
 if __name__ == '__main__':
     ryo_carrot_game_object = RyoCarrotGame()
