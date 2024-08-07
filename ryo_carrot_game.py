@@ -27,6 +27,13 @@ class RyoCarrotGame:
 
         self.event_babybunny_creation_time_random()
 
+        self.babybunnies_happy_count = 0
+        self.babybunnies_unhappy_count = 0
+
+        self.font = pygame.font.SysFont(None, 48)
+
+        self.create_images_counts()
+
     def run_ryo_carrot_game(self):
         running = True
 
@@ -41,6 +48,10 @@ class RyoCarrotGame:
 
             self.babybunnies.update()
 
+            self.delete_babybunny_disappeared()
+
+            self.eating_babybunny()
+
             self.update_landscape()
 
     def choose_events(self):
@@ -51,13 +62,13 @@ class RyoCarrotGame:
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_F11:
                     self.change_size_screen()
-                elif event.key == pygame.K_q:
+                elif event.key == pygame.K_q or event.key == pygame.K_ESCAPE:
                     sys.exit()
                 elif event.key == pygame.K_RIGHT:
                     self.ryo.moving_right_ryo = True
                 elif event.key == pygame.K_LEFT:
                     self.ryo.moving_left_ryo = True
-                elif event.key == pygame.K_c:
+                elif event.key == pygame.K_c or event.key == pygame.K_SPACE:
                     self.throw_carrots()
 
             elif event.type == pygame.KEYUP:
@@ -78,6 +89,9 @@ class RyoCarrotGame:
             carrot.draw_carrot()
 
         self.babybunnies.draw(self.landscape)
+
+        self.show_happy_babybunnies()
+        self.show_unhappy_babybunnies()
 
         pygame.display.flip()
 
@@ -116,7 +130,7 @@ class RyoCarrotGame:
 
     def delete_carrots_disappeared(self):
         for carrot in self.carrots.copy():
-            if carrot.rect_image_carrot.bottom <= 0:
+            if carrot.rect.bottom <= 0:
                 self.carrots.remove(carrot)
 
     def create_babybunnies(self):
@@ -131,6 +145,42 @@ class RyoCarrotGame:
         self.CREATE_BABYBUNNY_EVENT = pygame.USEREVENT + 1
         self.random_time_creation_babybunny()
 
+    def eating_babybunny(self):
+        babybunny_happy = pygame.sprite.groupcollide(
+            self.babybunnies, self.carrots, True, True)
+
+        if babybunny_happy:
+            self.babybunnies_happy_count += 1
+            print("happy baby bunnies:", self.babybunnies_happy_count)
+
+    def delete_babybunny_disappeared(self):
+        for babybunny in self.babybunnies.copy():
+            if babybunny.rect.top >= self.landscape.get_height():
+                self.babybunnies.remove(babybunny)
+                self.babybunnies_unhappy_count += 1
+                print("baby bunnies unhappy:", self.babybunnies_unhappy_count)
+
+    def show_happy_babybunnies(self):
+        rect_show_happy_babybunnies = pygame.Rect(self.screen.screen_width - 120, 10, 100, 100)
+        self.landscape.blit(self.happy_babybunnies_image, rect_show_happy_babybunnies)
+
+        happy_babybunnies_quantity_text = self.font.render(f"{self.babybunnies_happy_count}", True, (255, 165, 0))
+
+        self.landscape.blit(happy_babybunnies_quantity_text, rect_show_happy_babybunnies)
+
+    def show_unhappy_babybunnies(self):
+        rect_show_unhappy_babybunnies = pygame.Rect(self.screen.screen_width - 120, 120, 100, 100)
+        self.landscape.blit(self.unhappy_babybunnies_image, rect_show_unhappy_babybunnies)
+
+        unhappy_babybunnies_quantity = self.font.render(f"{self.babybunnies_unhappy_count}", True, (255, 165, 0))
+        self.landscape.blit(unhappy_babybunnies_quantity, rect_show_unhappy_babybunnies)
+
+    def create_images_counts(self):
+        self.happy_babybunnies_image = pygame.image.load("images/happy-baby-bunny.png")
+        self.happy_babybunnies_image = pygame.transform.scale(self.happy_babybunnies_image, (100, 100))
+
+        self.unhappy_babybunnies_image = pygame.image.load("images/unhappy-baby-bunny.png")
+        self.unhappy_babybunnies_image = pygame.transform.scale(self.unhappy_babybunnies_image, (100, 100))
 
 if __name__ == '__main__':
     ryo_carrot_game_object = RyoCarrotGame()
