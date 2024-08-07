@@ -33,6 +33,8 @@ class RyoCarrotGame:
 
             self.carrots.update()
 
+            self.delete_carrots_disappeared()
+
             self.update_landscape()
 
     def choose_events(self):
@@ -100,6 +102,10 @@ class RyoCarrotGame:
         new_carrot = Carrot(self)
         self.carrots.add(new_carrot)
 
+    def delete_carrots_disappeared(self):
+        for carrot in self.carrots.copy():
+            if carrot.rect_image_carrot.bottom <= 0:
+                self.carrots.remove(carrot)
 
 if __name__ == '__main__':
     ryo_carrot_game_object = RyoCarrotGame()
