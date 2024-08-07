@@ -4,6 +4,7 @@ import pygame
 from ryo import Ryo
 from screen import Screen
 from settings import Settings
+from carrot import Carrot
 
 
 class RyoCarrotGame:
@@ -19,6 +20,8 @@ class RyoCarrotGame:
         self.initialize_screen()
         self.ryo = Ryo(self)
 
+        self.carrots = pygame.sprite.Group()
+
     def run_ryo_carrot_game(self):
         running = True
 
@@ -27,6 +30,8 @@ class RyoCarrotGame:
             self.choose_events()
 
             self.ryo.update_position_ryo(self.is_fullscreen)
+
+            self.carrots.update()
 
             self.update_landscape()
 
@@ -44,6 +49,8 @@ class RyoCarrotGame:
                     self.ryo.moving_right_ryo = True
                 elif event.key == pygame.K_LEFT:
                     self.ryo.moving_left_ryo = True
+                elif event.key == pygame.K_c:
+                    self.throw_carrots()
 
             elif event.type == pygame.KEYUP:
                 if event.key == pygame.K_RIGHT:
@@ -54,6 +61,10 @@ class RyoCarrotGame:
     def update_landscape(self):
         self.landscape.blit(self.screen.background_image, (0, 0))
         self.ryo.draw_ryo_current_location()
+
+        for carrot in self.carrots.sprites():
+            carrot.draw_carrot()
+
         pygame.display.flip()
 
     def initialize_screen(self):
@@ -72,8 +83,6 @@ class RyoCarrotGame:
                  self.screen.screen_height),
                 pygame.FULLSCREEN
             )
-            print("landscape fullscreen: ", self.screen.screen_width)
-            print("landscape fullscreen: ", self.screen.screen_height)
             self.countChangeSizeLandscape += 1
             self.is_fullscreen = True
         else:
@@ -82,12 +91,14 @@ class RyoCarrotGame:
                 (self.screen.screen_width,
                  self.screen.screen_height)
             )
-            print("landscape: ", self.screen.screen_width)
-            print("landscape: ", self.screen.screen_height)
             self.countChangeSizeLandscape += 1
             self.is_fullscreen = False
 
         self.ryo.update_landscape(self.landscape)
+
+    def throw_carrots(self):
+        new_carrot = Carrot(self)
+        self.carrots.add(new_carrot)
 
 
 if __name__ == '__main__':
