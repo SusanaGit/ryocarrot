@@ -10,15 +10,16 @@ class BabyBunny(Sprite):
         super().__init__()
 
         self.initialize_landscape_settings(ryo_carrot_game_object)
-        self.load_babybunny(ryo_carrot_game_object)
+        self.load_babybunny()
         self.start_position_babybunny()
-        self.horizontal_position_babybunny()
+        self.x_position_babybunny()
+        self.y_position_babybunny()
 
     def initialize_landscape_settings(self, ryo_carrot_game_object):
         self.landscape = ryo_carrot_game_object.landscape
         self.settings = ryo_carrot_game_object.settings
 
-    def load_babybunny(self, ryo_carrot_game_object):
+    def load_babybunny(self):
         self.image = pygame.image.load('images/baby-bunny.png')
         self.image = pygame.transform.scale(self.image, (self.settings.babybunny_width,
                                                          self.settings.babybunny_height))
@@ -30,5 +31,18 @@ class BabyBunny(Sprite):
         self.rect.x = random_number_x
         self.rect.y = 0
 
-    def horizontal_position_babybunny(self):
+    def x_position_babybunny(self):
         self.x = float(self.rect.x)
+
+    def y_position_babybunny(self):
+        self.y = float(self.rect.y)
+
+    def update(self):
+        self.y += self.settings.babybunny_speed
+        self.rect.y = self.y
+
+        self.delete_babybunny()
+
+    def delete_babybunny(self):
+        if self.rect.top > self.landscape.get_height():
+            self.kill()
