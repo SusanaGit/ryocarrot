@@ -1,7 +1,7 @@
 import pygame
-from settings import Settings
-from pygame.sprite import Sprite
+import random
 
+from pygame.sprite import Sprite
 
 class BabyBunny(Sprite):
 
@@ -24,7 +24,10 @@ class BabyBunny(Sprite):
         self.rect = self.image.get_rect()
 
     def start_position_babybunny(self):
-        self.rect.x = self.rect.width
+        info = pygame.display.Info()
+        random_number_x = random.randrange(0, info.current_w)
+        print("width: ", info.current_w)
+        self.rect.x = random_number_x
         self.rect.y = self.rect.height
 
     def horizontal_position_babybunny(self):
