@@ -1,3 +1,4 @@
+import random
 import sys
 import pygame
 
@@ -22,9 +23,9 @@ class RyoCarrotGame:
         self.ryo = Ryo(self)
 
         self.carrots = pygame.sprite.Group()
-
         self.babybunnies = pygame.sprite.Group()
-        self.create_babybunnies()
+
+        self.event_babybunny_creation_time_random()
 
     def run_ryo_carrot_game(self):
         running = True
@@ -37,6 +38,8 @@ class RyoCarrotGame:
             self.carrots.update()
 
             self.delete_carrots_disappeared()
+
+            self.babybunnies.update()
 
             self.update_landscape()
 
@@ -62,6 +65,10 @@ class RyoCarrotGame:
                     self.ryo.moving_right_ryo = False
                 if event.key == pygame.K_LEFT:
                     self.ryo.moving_left_ryo = False
+
+            elif event.type == self.CREATE_BABYBUNNY_EVENT:
+                self.create_babybunnies()
+                self.random_time_creation_babybunny()
 
     def update_landscape(self):
         self.landscape.blit(self.screen.background_image, (0, 0))
@@ -115,6 +122,14 @@ class RyoCarrotGame:
     def create_babybunnies(self):
         new_babybunny = BabyBunny(self)
         self.babybunnies.add(new_babybunny)
+
+    def random_time_creation_babybunny(self):
+        random_time_creation_babybunny = random.randint(3000, 5000)
+        pygame.time.set_timer(self.CREATE_BABYBUNNY_EVENT, random_time_creation_babybunny)
+
+    def event_babybunny_creation_time_random(self):
+        self.CREATE_BABYBUNNY_EVENT = pygame.USEREVENT + 1
+        self.random_time_creation_babybunny()
 
 
 if __name__ == '__main__':

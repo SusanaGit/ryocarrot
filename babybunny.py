@@ -3,6 +3,7 @@ import random
 
 from pygame.sprite import Sprite
 
+
 class BabyBunny(Sprite):
 
     def __init__(self, ryo_carrot_game_object):
@@ -20,15 +21,14 @@ class BabyBunny(Sprite):
     def load_babybunny(self, ryo_carrot_game_object):
         self.image = pygame.image.load('images/baby-bunny.png')
         self.image = pygame.transform.scale(self.image, (self.settings.babybunny_width,
-                                                            self.settings.babybunny_height))
+                                                         self.settings.babybunny_height))
         self.rect = self.image.get_rect()
 
     def start_position_babybunny(self):
         info = pygame.display.Info()
-        random_number_x = random.randrange(0, info.current_w)
-        print("width: ", info.current_w)
+        random_number_x = random.randrange(0, (info.current_w - self.rect.width))
         self.rect.x = random_number_x
-        self.rect.y = self.rect.height
+        self.rect.y = 0
 
     def horizontal_position_babybunny(self):
         self.x = float(self.rect.x)
