@@ -5,6 +5,7 @@ from ryo import Ryo
 from screen import Screen
 from settings import Settings
 from carrot import Carrot
+from babybunny import BabyBunny
 
 
 class RyoCarrotGame:
@@ -22,11 +23,13 @@ class RyoCarrotGame:
 
         self.carrots = pygame.sprite.Group()
 
+        self.babybunnies = pygame.sprite.Group()
+        self.create_babybunnies()
+
     def run_ryo_carrot_game(self):
         running = True
 
         while running:
-
             self.choose_events()
 
             self.ryo.update_position_ryo(self.is_fullscreen)
@@ -67,6 +70,8 @@ class RyoCarrotGame:
         for carrot in self.carrots.sprites():
             carrot.draw_carrot()
 
+        self.babybunnies.draw(self.landscape)
+
         pygame.display.flip()
 
     def initialize_screen(self):
@@ -106,6 +111,11 @@ class RyoCarrotGame:
         for carrot in self.carrots.copy():
             if carrot.rect_image_carrot.bottom <= 0:
                 self.carrots.remove(carrot)
+
+    def create_babybunnies(self):
+        new_babybunny = BabyBunny(self)
+        self.babybunnies.add(new_babybunny)
+
 
 if __name__ == '__main__':
     ryo_carrot_game_object = RyoCarrotGame()
