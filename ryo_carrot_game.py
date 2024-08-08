@@ -1,5 +1,7 @@
 import random
 import sys
+from datetime import time
+
 import pygame
 import asyncio
 
@@ -82,6 +84,13 @@ class RyoCarrotGame:
                     self.ryo.moving_right_ryo = False
                 if event.key == pygame.K_LEFT:
                     self.ryo.moving_left_ryo = False
+
+            elif event.type == pygame.FINGERDOWN:
+                self.touch_start(event)
+            elif event.type == pygame.FINGERUP:
+                self.touch_end(event)
+            elif event.type == pygame.FINGERMOTION:
+                self.moving_ryo_mbile(event)
 
             elif event.type == self.CREATE_BABYBUNNY_EVENT:
                 self.create_babybunnies()
@@ -192,4 +201,29 @@ class RyoCarrotGame:
         pygame.mixer.music.load("music/dreams.mp3")
         pygame.mixer.music.play(-1)
         print("Royalty Free Music: https://www.bensound.com License code: SES9TCRFZ5LYRORV")
+
+    def touch_start(self, event):
+        self.touch_start_position = (event.x * self.screen.screen_width, event.y * self.screen.screen_height)
+        self.touch_start_position_y = self.touch_start_position[1]
+
+    def touch_end(self, event):
+        self.touch_end_y = event.y * self.screen.screen_height
+
+    def moving_ryo_mbile(self, event):
+        x = event.x * self.screen.screen_width
+        y = event.y * self.screen.screen_height
+
+        if self.touch_start_position_y is not None and y < self.touch_start_position_y - 50:
+            self.throw_carrots()
+            self.touch_start_position_y = None
+
+        if x > self.touch_start_position[0]:
+            self.ryo.moving_right_ryo = True
+            self.ryo.moving_left_ryo = False
+        elif x < self.touch_start_position[0]:
+            self.ryo.moving_left_ryo = True
+            self.ryo.moving_right_ryo = False
+        else:
+            self.ryo.moving_left_ryo = False
+            self.ryo.moving_right_ryo = False
 
