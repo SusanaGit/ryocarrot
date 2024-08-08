@@ -1,5 +1,7 @@
 # Ryo Carrot Game
 
+![img.png](img.png)
+
 My first game using Pygame!
 
 Play the game [here](https://susanagit.itch.io/ryo-carrot-game).
