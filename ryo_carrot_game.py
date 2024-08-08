@@ -1,6 +1,7 @@
 import random
 import sys
 import pygame
+import asyncio
 
 from ryo import Ryo
 from screen import Screen
@@ -37,7 +38,7 @@ class RyoCarrotGame:
 
         self.music()
 
-    def run_ryo_carrot_game(self):
+    async def main(self):
         running = True
 
         while running:
@@ -56,6 +57,8 @@ class RyoCarrotGame:
             self.eating_babybunny()
 
             self.update_landscape()
+
+            await asyncio.sleep(0)
 
     def choose_events(self):
         for event in pygame.event.get():
@@ -190,7 +193,3 @@ class RyoCarrotGame:
         pygame.mixer.music.play(-1)
         print("Royalty Free Music: https://www.bensound.com License code: SES9TCRFZ5LYRORV")
 
-
-if __name__ == '__main__':
-    ryo_carrot_game_object = RyoCarrotGame()
-    ryo_carrot_game_object.run_ryo_carrot_game()
